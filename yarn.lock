@@ -1735,9 +1735,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ankibridge@link:./src::locator=obsidian-ankibridge%40workspace%3A.":
+"ankibridge@link:./src::locator=obsidian-ankibridge-zn-fork%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "ankibridge@link:./src::locator=obsidian-ankibridge%40workspace%3A."
+  resolution: "ankibridge@link:./src::locator=obsidian-ankibridge-zn-fork%40workspace%3A."
   languageName: node
   linkType: soft
 
@@ -5613,9 +5613,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"obsidian-ankibridge@workspace:.":
+"obsidian-ankibridge-zn-fork@workspace:.":
   version: 0.0.0-use.local
-  resolution: "obsidian-ankibridge@workspace:."
+  resolution: "obsidian-ankibridge-zn-fork@workspace:."
   dependencies:
     "@popperjs/core": ^2.11.2
     "@types/glob": ^7.2.0
