@@ -11,21 +11,32 @@ div.ankibridge-card {
 
     margin: 15px 0;
 
-    &:hover {
-        div.ankibridge-card-container {
-            div.ankibridge-card-config {
-                transform: translateX(0%);
-                opacity  : 1;
-            }
+    &:not(:hover) {
+        button.ankibridge-card-show-config {
+            display: none;
         }
     }
+
+    //&:hover {
+    //    div.ankibridge-card-container {
+    //        div.ankibridge-card-config {
+    //            transform: translateX(0%);
+    //            opacity  : 1;
+    //        }
+    //    }
+    //}
 
     &.error {
         background-color: var(--background-modifier-error);
     }
 
-    div.ankibridge-card-container {
-        margin: 20px 25px;
+    button.ankibridge-card-show-config {
+        &:hover {
+            div.ankibridge-card-config {
+                transform: translateX(0%);
+                opacity  : 1;
+            }
+        }
 
         // Config
         div.ankibridge-card-config {
@@ -125,6 +136,11 @@ div.ankibridge-card {
                 }
             }
         }
+    }
+
+    div.ankibridge-card-container {
+        margin: 20px 25px;
+
 
         div.ankibridge-card-fields {
 

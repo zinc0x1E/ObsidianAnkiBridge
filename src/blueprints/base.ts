@@ -255,10 +255,15 @@ export abstract class CodeBlockBlueprint extends Blueprint {
 
         const containerEl = cardEl.firstChild
 
+
         // Add config elements
         const prunedConfig = _.omitBy(config, _.isNil)
         if (!_.isEmpty(prunedConfig)) {
-            const configEl = containerEl!.createDiv('ankibridge-card-config')
+            const showConfigButtonEl = containerEl!.createEl('button')
+            showConfigButtonEl.classList.add('ankibridge-card-show-config', 'copy-code-button')
+            showConfigButtonEl.innerText = 'Show Conifg'
+
+            const configEl = showConfigButtonEl!.createDiv('ankibridge-card-config')
             Object.entries(prunedConfig).forEach(([key, value]) => {
                 const entry = configEl.createSpan('ankibridge-card-config-entry')
                 entry.setAttribute('data-type', key)
