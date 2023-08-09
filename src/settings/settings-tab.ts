@@ -27,6 +27,7 @@ export class SettingsTab extends PluginSettingTab {
         this.addSupport()
         this.addGeneral()
         this.addDefaultDeck()
+        this.addCardAndFieldMapping()
         this.addNetworking()
         this.addBlueprints()
         this.addProcessors()
@@ -353,6 +354,124 @@ export class SettingsTab extends PluginSettingTab {
             s.infoEl.remove()
         })
     }
+
+    addCardAndFieldMapping(): void {
+        this.containerEl.createEl('h2', { text: 'Card and Fields Mapping' })
+        this.containerEl.createEl('h3', { text: 'Basic Card and Its Fields' })
+
+        new Setting(this.containerEl)
+            .setName('Basic Card Name')
+            .setDesc(
+                'The name of the Basic Card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.basicNoteTypeNames.noteTypeName)
+                    .setPlaceholder('Your note type name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.basicNoteTypeNames.noteTypeName = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The basic note type name must be at least 1 character long')
+                        }
+                    })
+            })
+
+        new Setting(this.containerEl)
+            .setName('Basic Card - Front Field Name')
+            .setDesc(
+                'The name of the front field of a Basic card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.basicNoteTypeNames.fieldNames.frontLike)
+                    .setPlaceholder('Your field name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.basicNoteTypeNames.fieldNames.frontLike = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The front field name of basic card must be at least 1 character long')
+                        }
+                    })
+            })
+
+        new Setting(this.containerEl)
+            .setName('Basic Card - Back Field Name')
+            .setDesc(
+                'The name of the back field of a Basic card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.basicNoteTypeNames.fieldNames.backLike)
+                    .setPlaceholder('Your field name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.basicNoteTypeNames.fieldNames.backLike = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The back field name of basic card must be at least 1 character long')
+                        }
+                    })
+            })
+
+        this.containerEl.createEl('h3', { text: 'Cloze Card and Its Fields' })
+        new Setting(this.containerEl)
+            .setName('Cloze Card Name')
+            .setDesc(
+                'The name of the Cloze Card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.clozeNoteTypeNames.noteTypeName)
+                    .setPlaceholder('Your note type name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.clozeNoteTypeNames.noteTypeName = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The cloze note type name must be at least 1 character long')
+                        }
+                    })
+            })
+        
+        new Setting(this.containerEl)
+            .setName('Cloze Card - Text Field Name')
+            .setDesc(
+                'The name of the text (or front) field of a Cloze card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.clozeNoteTypeNames.fieldNames.frontLike)
+                    .setPlaceholder('Your field name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.clozeNoteTypeNames.fieldNames.frontLike = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The text (or front) field name of cloze card must be at least 1 character long')
+                        }
+                    })
+            })
+
+        new Setting(this.containerEl)
+            .setName('Cloze Card - Extra Field Name')
+            .setDesc(
+                'The name of the extra (or back) field of a Cloze card in your Anki\'s setting',
+            )
+            .addText((text) => {
+                text.setValue(this.plugin.settings.clozeNoteTypeNames.fieldNames.backLike)
+                    .setPlaceholder('Your field name')
+                    .onChange((value) => {
+                        if (value.length) {
+                            this.plugin.settings.clozeNoteTypeNames.fieldNames.backLike = value
+                            this.plugin.saveSettings()
+                        } else {
+                            new Notice('The extra (or back) field name of cloze card must be at least 1 character long')
+                        }
+                    })
+            })
+
+
+    }
+
+
 
     addNetworking(): void {
         this.containerEl.createEl('h2', { text: 'Networking Settings' })

@@ -18,6 +18,22 @@ export interface ISettings {
     fallbackDeck: string
     defaultDeckMaps: Array<DefaultDeckMap>
 
+    basicNoteTypeNames: {
+        noteTypeName: string,
+        fieldNames: {
+            frontLike: string,
+            backLike: string,
+        }
+    }
+
+    clozeNoteTypeNames: {
+        noteTypeName: string,
+        fieldNames: {
+            frontLike: string,
+            backLike: string,
+        }
+    },
+
     blueprints: Record<string, boolean>
     processors: Record<string, boolean>
 
@@ -102,6 +118,22 @@ export const DEFAULT_SETTINGS: ISettings = {
 
     fallbackDeck: 'Default',
     defaultDeckMaps: [],
+
+    basicNoteTypeNames: {
+        noteTypeName: 'Basic',
+        fieldNames: {
+            frontLike: 'Front',
+            backLike: 'Back',
+        }
+    },
+
+    clozeNoteTypeNames: {
+        noteTypeName: 'Cloze',
+        fieldNames: {
+            frontLike: 'Front',
+            backLike: 'Back Extra',
+        }
+    },
 
     blueprints: {},
     processors: {},

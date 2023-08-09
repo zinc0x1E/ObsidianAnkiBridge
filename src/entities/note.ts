@@ -2,8 +2,8 @@ import { NoteBase } from 'ankibridge/notes/base'
 import { arrayBufferToBase64 } from 'ankibridge/utils/encoding'
 import { TFile } from 'obsidian'
 
-export type AnkiBasicField = 'Front' | 'Back'
-export type AnkiClozeField = 'Text' | 'Back Extra'
+export type AnkiBasicField = string
+export type AnkiClozeField = string
 export type AnkiField = AnkiBasicField | AnkiClozeField
 
 export type AnkiFields = Record<AnkiBasicField, string> | Record<AnkiClozeField, string>
@@ -14,7 +14,7 @@ export enum NoteField {
 }
 export type NoteFields = Record<NoteField, string | null>
 
-export type ModelName = 'Basic' | 'Cloze'
+export type ModelName = string
 
 export interface SourceDescriptor {
     from: number

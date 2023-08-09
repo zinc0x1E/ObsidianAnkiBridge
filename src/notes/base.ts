@@ -125,22 +125,26 @@ export abstract class NoteBase {
         return this.blueprint.renderAsText(this)
     }
 
-    public fieldsToAnkiFields(fields: NoteFields): AnkiFields {
+    public fieldsToAnkiFields(fields: NoteFields, plugin: AnkiBridgePlugin): AnkiFields {
+        let namesPack = undefined
         if (this.isCloze) {
-            return {
-                Text: fields[NoteField.Frontlike] || '',
-                'Back Extra': fields[NoteField.Backlike] || '',
-            }
+            namesPack = plugin.settings.clozeNoteTypeNames
+        } else {
+            namesPack = plugin.settings.basicNoteTypeNames
         }
 
-        return { Front: fields[NoteField.Frontlike] || '', Back: fields[NoteField.Backlike] || '' }
+        return {
+            [namesPack.fieldNames.frontLike]: fields[NoteField.Frontlike] || '',
+            [namesPack.fieldNames.backLike]: fields[NoteField.Backlike] || ''
+        }
     }
 
-    public normaliseNoteInfoFields(noteInfo: NotesInfoResponseEntity): NoteFields {
-        const isCloze = noteInfo.modelName === 'Cloze'
+    public normaliseNoteInfoFields(noteInfo: NotesInfoResponseEntity, plugin: AnkiBridgePlugin): NoteFields {
+        const isCloze = noteInfo.modelName === plugin.settings.clozeNoteTypeNames.noteTypeName
+        const namesPack = isCloze ? plugin.settings.clozeNoteTypeNames : plugin.settings.basicNoteTypeNames
 
-        const frontlike = isCloze ? 'Text' : 'Front'
-        const backlike = isCloze ? 'Back Extra' : 'Back'
+        const frontlike = namesPack.fieldNames.frontLike
+        const backlike = namesPack.fieldNames.backLike
 
         return {
             [NoteField.Frontlike]: noteInfo.fields[frontlike].value,
@@ -152,12 +156,12 @@ export abstract class NoteBase {
         return this.getEnabled() && this.renderAsText() !== this.sourceText
     }
 
-    public getModelName(): ModelName {
+    public getModelName(plugin: AnkiBridgePlugin): ModelName {
         if (this.isCloze) {
-            return 'Cloze'
+            return plugin.settings.clozeNoteTypeName
         }
 
-        return 'Basic'
+        return plugin.settings.basicNoteTypeName
     }
 
     /**

@@ -113,7 +113,7 @@ export class Bridge {
         }
 
         // Check that model is the same
-        if (note.getModelName() !== noteInfo.modelName) {
+        if (note.getModelName(this.plugin) !== noteInfo.modelName) {
             delta.shouldChangeModel = true
 
             // Return early since model change requires recreation anyway
@@ -121,7 +121,7 @@ export class Bridge {
         }
 
         // Check that fields are the same
-        if (!_.isEqual(note.normaliseNoteInfoFields(noteInfo), renderedNote)) {
+        if (!_.isEqual(note.normaliseNoteInfoFields(noteInfo, this.plugin), renderedNote)) {
             delta.shouldUpdateFields = true
         }
 
@@ -182,10 +182,10 @@ export class Bridge {
         const anki = this.plugin.anki
 
         const deckName = note.getDeckName(this.plugin)
-        const modelName = note.getModelName()
+        const modelName = note.getModelName(this.plugin)
         const tagsToSet = note.getTags(this.plugin)
 
-        const ankiFields = note.fieldsToAnkiFields(renderedFields)
+        const ankiFields = note.fieldsToAnkiFields(renderedFields, this.plugin)
 
         // Add note
         const id = await anki.addNote(note, deckName, modelName, ankiFields, tagsToSet)
@@ -203,7 +203,7 @@ export class Bridge {
     ): Promise<UpdateNoteFieldsResponse> {
         const anki = this.plugin.anki
 
-        const ankiFields = note.fieldsToAnkiFields(renderedFields)
+        const ankiFields = note.fieldsToAnkiFields(renderedFields, this.plugin)
         await anki.updateNoteFields(note, ankiFields)
         await this.storeMediaFiles(note)
 
