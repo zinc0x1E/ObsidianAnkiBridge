@@ -20,16 +20,13 @@ export class MediaPostprocessor extends Postprocessor {
         domField: HTMLTemplateElement,
         ctx: ProcessorContext,
     ): Promise<void> {
-        const embeds = Array.from(domField.content.querySelectorAll('span.internal-embed'))
+        const embeds = Array.from(domField.content.querySelectorAll('div.internal-embed'))
 
         await Promise.all(
             embeds.map(async (embed) => {
-                const alt = embed.innerHTML
-
-                const srcpath = embed.getAttribute('src')!
-                const linkpath = getLinkpath(srcpath) // This might be dodgy?
-
-                const file = this.app.metadataCache.getFirstLinkpathDest(linkpath, srcpath)
+                const alt = embed.innerHTML;
+                const srcpath = embed.getAttribute("src");
+                const file = this.app.metadataCache.getFirstLinkpathDest(srcpath, note.source.file.path);
                 if (file === null) {
                     throw new Error('Could not find embed')
                 }
