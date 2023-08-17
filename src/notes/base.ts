@@ -189,24 +189,19 @@ export abstract class NoteBase {
     }
 
     public getTags(plugin: AnkiBridgePlugin): Array<string> {
-        if (plugin.settings.inheritTags === true) {
-            const cache = plugin.app.metadataCache.getFileCache(this.source.file)
-            if (cache && getAllTags(cache) !== null) {
-                var tags = (getAllTags(cache)) as string[]
-                // Strip out the hash symbol
-                var tags = tags.map((tag) => tag.replace('#', ''))
-                // Convert hierarchial tags to anki format
-                var tags = tags.map((tag) => tag.replace('/', '::'))
-                var tags = tags?.concat(this.config.tags || [])
-                // Filter out duplicates
-                var tags = tags.filter((item, index) => tags.indexOf(item) === index)
-                return [plugin.settings.tagInAnki, ...(tags || [])]
-            } else {
-                return [plugin.settings.tagInAnki, ...(this.config.tags || [])]
-            }
-        } else {
+        const cache = plugin.app.metadataCache.getFileCache(this.source.file)
+        if (plugin.settings.inheritTags === false || !cache || getAllTags(cache) === null) {
             return [plugin.settings.tagInAnki, ...(this.config.tags || [])]
         }
+
+        const tags = ((getAllTags(cache)) as string[])
+            .map(tag => tag.replace('#', '')) // Strip out the hash symbol
+            .map(tag => tag.replace('/', '::')) // Convert hierarchial tags to anki format
+            .concat(this.config.tags || []) // Add configured tags
+            .concat(plugin.settings.tagInAnki) // Add configured tags
+            .filter((item, index) => tags.indexOf(item) === index) // Filter out duplicates
+
+        return tags || []
     }
 
     public getEnabled(): boolean {
