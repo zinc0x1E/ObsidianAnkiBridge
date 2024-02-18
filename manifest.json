@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-ankibridge-zn-fork",
 	"name": "AnkiBridge Zn Fork",
-	"version": "0.8.0.zn.0.0.1",
+	"version": "0.8.0.zn.0.0.1.alpha.1",
 	"minAppVersion": "0.13.16",
 	"description": "Yet Another Anki Bridge",
 	"author": "Jeppe Klitgaard & Zinc0x1E",
