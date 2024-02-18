@@ -160,10 +160,10 @@ export abstract class NoteBase {
 
     public getModelName(plugin: AnkiBridgePlugin): ModelName {
         if (this.isCloze) {
-            return plugin.settings.clozeNoteTypeName
+            return plugin.settings.clozeNoteTypeNames.noteTypeName
         }
 
-        return plugin.settings.basicNoteTypeName
+        return plugin.settings.basicNoteTypeNames.noteTypeName
     }
 
     /**
@@ -196,12 +196,13 @@ export abstract class NoteBase {
 
         const tags = ((getAllTags(cache)) as string[])
             .map(tag => tag.replace('#', '')) // Strip out the hash symbol
-            .map(tag => tag.replace('/', '::')) // Convert hierarchial tags to anki format
+            .map(tag => tag.replaceAll('/', '::')) // Convert hierarchial tags to anki format
             .concat(this.config.tags || []) // Add configured tags
             .concat(plugin.settings.tagInAnki) // Add configured tags
-            .filter((item, index) => tags.indexOf(item) === index) // Filter out duplicates
 
-        return tags || []
+        const tagsUnique = [...new Set(tags)]
+
+        return tagsUnique || []
     }
 
     public getEnabled(): boolean {
